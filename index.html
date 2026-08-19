@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nero AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0b0f;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      padding: 18px;
+      background: #111118;
+      border-bottom: 1px solid #292933;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+    }
+
+    .header p {
+      color: #888;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .chat {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 13px 16px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .nero {
+      background: #191923;
+      border: 1px solid #292936;
+      margin-right: auto;
+    }
+
+    .user {
+      background: #4f46e5;
+      margin-left: auto;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+      padding: 14px;
+      background: #111118;
+      border-top: 1px solid #292933;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid #33333f;
+      background: #1a1a22;
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .input-area button {
+      width: 50px;
+      border: none;
+      border-radius: 14px;
+      background: #4f46e5;
+      color: white;
+      font-size: 20px;
+    }
+
+    .input-area button:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>🤖 Nero AI</h1>
+    <p>Teman AI milikmu</p>
+  </div>
+
+  <div class="chat" id="chat">
+    <div class="message nero">
+      Halo Kodi 👋<br>
+      Gue Nero. Ada yang bisa gue bantu?
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input
+      type="text"
+      id="messageInput"
+      placeholder="Tulis pesan..."
+    >
+    <button onclick="sendMessage()">➤</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("messageInput");
+      const chat = document.getElementById("chat");
+
+      const text = input.value.trim();
+
+      if (text === "") return;
+
+      const userMessage = document.createElement("div");
+      userMessage.className = "message user";
+      userMessage.textContent = text;
+
+      chat.appendChild(userMessage);
+
+      input.value = "";
+
+      setTimeout(() => {
+        const neroMessage = document.createElement("div");
+        neroMessage.className = "message nero";
+        neroMessage.textContent =
+          "Pesanmu sudah gue terima 😎 Untuk sekarang gue masih versi awal. Nanti kita bikin Nero jauh lebih pintar.";
+
+        chat.appendChild(neroMessage);
+
+        chat.scrollTop = chat.scrollHeight;
+      }, 500);
+
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    document.getElementById("messageInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -121,7 +121,7 @@
   </div>
 
   <script>
-    function sendMessage() {
+   async function sendMessage() {
       const input = document.getElementById("messageInput");
       const chat = document.getElementById("chat");
 
@@ -136,18 +136,35 @@
       chat.appendChild(userMessage);
 
       input.value = "";
+const neroMessage = document.createElement("div");
+neroMessage.className = "message nero";
+neroMessage.textContent = "Nero lagi mikir... 🤔";
+chat.appendChild(neroMessage);
 
-      setTimeout(() => {
-        const neroMessage = document.createElement("div");
-        neroMessage.className = "message nero";
-        neroMessage.textContent =
-          "Pesanmu sudah gue terima 😎 Untuk sekarang gue masih versi awal. Nanti kita bikin Nero jauh lebih pintar.";
+try {
+    const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: text
+        })
+    });
 
-        chat.appendChild(neroMessage);
+    const data = await response.json();
 
-        chat.scrollTop = chat.scrollHeight;
-      }, 500);
+    if (!response.ok) {
+        throw new Error(data.error || "Gagal menghubungi Nero");
+    }
 
+    neroMessage.textContent = data.reply;
+} catch (error) {
+    neroMessage.textContent = "Waduh, Nero gagal terhubung 😭";
+    console.error(error);
+}
+
+chat.scrollTop = chat.scrollHeight;
       chat.scrollTop = chat.scrollHeight;
     }
 
